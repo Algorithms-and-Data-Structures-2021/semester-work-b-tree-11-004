@@ -1,10 +1,18 @@
+/* B-Tree
+ * Структура данных Б-дерева.
+ * Операции поиска вставки и удаления за время O(lg(n)).
+ * Использует O(n) память, где n-количество элементов в дереве.
+ */
+
 #pragma once
 
-// Заголовочный файл с объявлением структуры данных
+#include <utility>
+
+#define NULL 0
+#define SEARCH_KEY_NOT_FOUND 's'
+#define REMOVE_KEY_NOT_FOUND 'r'
 
 namespace itis {
-
-  // Tip 1: объявите здесь необходимые структуры, функции, константы и прочее
 
   // Пример: объявление константы времени компиляции в заголовочном файле
   inline constexpr auto kStringConstant = "Hello, stranger!";
@@ -97,5 +105,4 @@ namespace itis {
     // Минимальная степень дерева.
     unsigned minDegree;
   };
-
 }  // namespace itis
