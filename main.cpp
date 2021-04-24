@@ -5,7 +5,8 @@ using namespace std;
 
 int main() {
   cout << "Time test:\n";
-  string a = Parser::process_data();
-  cout << a;
+  string path = "E:\\CppProjects\\semester-work-b-tree-11-004\\dataset\\data\\insert\\data(10000).txt";
+
+  string a = Parser::process_data(path);
   return 0;
 }

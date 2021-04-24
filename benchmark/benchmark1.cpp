@@ -21,7 +21,7 @@ vector<int> split(const string& s, char delimiter) {
   return tokens;
 }
 
-string absolutePathToInputFile = "dataset\\data\\insert\\data(100).txt";  // absolute path to file
+string absolutePathToInputFile = "dataset\\data\\insert\\data(100).txt";
 string process_data() {
   ifstream file(inputNameFile);
   string result = "";
