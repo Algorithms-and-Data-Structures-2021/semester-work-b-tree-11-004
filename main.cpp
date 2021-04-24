@@ -1,12 +1,11 @@
 #include <iostream>
-
-#include "data_structure.hpp"
+#include <parser.hpp>
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
-  for (int index = 0; index < argc; index++) {
-    cout << index << ": " << argv[index] << endl;
-  }
+int main() {
+  cout << "Time test:\n";
+  string a = Parser::process_data();
+  cout << a;
   return 0;
 }
