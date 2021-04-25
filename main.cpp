@@ -1,12 +1,12 @@
 #include <iostream>
-
-#include "data_structure.hpp"
+#include <parser.hpp>
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
-  for (int index = 0; index < argc; index++) {
-    cout << index << ": " << argv[index] << endl;
-  }
+int main() {
+  cout << "Time test:\n";
+  string path = "E:\\CppProjects\\semester-work-b-tree-11-004\\dataset\\data\\insert\\data(10000).txt";
+
+  string a = Parser::process_data(path);
   return 0;
 }
