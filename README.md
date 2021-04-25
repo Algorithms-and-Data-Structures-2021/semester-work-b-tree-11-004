@@ -57,9 +57,7 @@ _Краткое описание семестрового проекта:_
 
 ## Требования (Prerequisites)
 
-_В этом разделе задаются основые требования к программному и аппаратному обеспечению для успешной работы с проектом._
-
-**Пример**. Рекомендуемые требования:
+ Рекомендуемые требования:
 
 1. С++ компилятор c поддержкой стандарта C++17 (например, _GNU GCC 8.1.x_ и выше).
 2. Система автоматизации сборки _CMake_ (версия _3.12.x_ и выше).
@@ -77,20 +75,18 @@ _Постарайтесь написать инструкцию так, чтоб
 
 #### Сборка проекта
 
-_Опишите процесс сборки проекта._
-
 Склонируйте проект к себе на устройство через [Git for Windows](https://gitforwindows.org/) (либо используйте
 возможности IDE):
 
 ```shell
-git clone https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template.git
+https://github.com/Algorithms-and-Data-Structures-2021/semester-work-b-tree-11-004.git
 ```
 
 Для ручной сборки проекта в терминале введите:
 
 ```shell
 # переход в папку с проектом
-cd C:\Users\username\asd-projects\semester-work-template
+cd C:\Users\username\asd-projects\semester-work-b-tree-11-004
 
 # создание папки для файлов сборки (чтобы не засорять папку с проектом) 
 mkdir -p build && cd build 
