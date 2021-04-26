@@ -1,108 +1,96 @@
-/* B-Tree
- * Структура данных Б-дерева.
- * Операции поиска вставки и удаления за время O(lg(n)).
- * Использует O(n) память, где n-количество элементов в дереве.
- */
-
 #pragma once
 
 #include <utility>
+#include <unordered_set>
+namespace itis {
 
-#define NULL 0
 #define SEARCH_KEY_NOT_FOUND 's'
 #define REMOVE_KEY_NOT_FOUND 'r'
 
-namespace itis {
+  /// Структура для узлов в нашем дереве
 
-  // Пример: объявление константы времени компиляции в заголовочном файле
-  inline constexpr auto kStringConstant = "Hello, stranger!";
-
-  // Структура для представление узлов Б-дереву
-  template<typename T>
   struct BNode {
-    BNode<T> **child;  // Массив указателей на детей.
-    T *key;            // Массив ключей
-    unsigned size;     // Количество ключей.
-    bool leaf;         // Является ли узел листом.
+    BNode **child;  // Массив указателей на детей
+    int *key;       // Массив ключей
+    unsigned size;  // Количество ключей
+    bool leaf;      // Является ли узел листом
   };
 
-  template<typename T>
-  struct BTree {
+  typedef char BTREE_EXCEPTION;
+
+  class BTree {
    public:
-    // Конструктор.
-    // Первый параметр - это минимальная степень дерева.
-    // Второй параметр - это функция сравнения ключей дерева.
-    // Третий параметр - это функция, которая печатает ключи.
-    // Константное время.
-    BTree(unsigned, bool (*)(T, T), void (*)(T) = NULL);
+    // Конструктор
+    // Параметр - минимальная степень дерева
+    // Сложность O(1)
+    explicit BTree(unsigned);
 
-    // Деструктор.
-    // Линейное время.
-    ~BTree<T>();
+    // Деструктор
+    // Сложность O(n)
+    ~BTree();
 
-    //Вставляет ключ в дерево.
-    // Логорифмическое время.
-    void insert(T);
+    // Вставка ключа в дерево
+    // Сложность O(log n)
+    void insert(int);
 
-    // Удаляет ключ из дерева.
-    // Вызывает исключение BTREE_EXCEPTION, если не найден элемент для удаления.
-    // Логорифмическое время.
-    T remove(T);
+    // Убирает ключ из дерева
+    // Бросает ошибку BTREE_EXCEPTION если не найден объект, который надо удалить
+    // Сложность O(log n)
+    int remove(int);
 
-    // Функция поиска ключа в дереве.
-    // returnValue.first - это узел, в котором находится элемент.
-    // returnValue.second - это корректный индекс в массиве ключей этого узла.
-    // Логорифмическое время.
-    std::pair<BNode<T> *, unsigned> search(T);
+    // Функция поиска ключа в дереве
+    // Сложность O(log n)
+    std::pair<BNode *, unsigned> search(int);
 
-    // Использует поиск, но возвращает просто ключ, а не весь узел.
-    // Полезно, когда T-это пара значений ключа, а LessThan смотрит только на ключ.
-    // Выдает исключение BTREE_EXCEPTION, если не найден элемент, соответствующий параметру
-    // Логорифмическое время.
-    T searchKey(T);
+    // Использует поиск, но выводит только ключ
+    // Бросает ошибку BTREE_EXCEPTION если не найден нужный объект
+    // Сложность O(log n)
+    int searchKey(int);
 
-    // Вывод дерева в консоль.
-    // Линейное время.
+    // Принт
+    // Сложность O(n)
     void print();
 
    private:
-    // Используется для инициализации узлов
-    void initializeNode(BNode<T> *);
+    // Нужна для инициализации узлов
+    void initializeNode(BNode *);
 
-    // Рекурсивная функция, вызываемая в деструкторе
-    void freeNode(BNode<T> *);
+    // Рекурсивная функция, используемая деструктором
+    void freeNode(BNode *);
 
     // Находит индекс ключа в узле
-    unsigned findIndex(BNode<T> *, T);
+    unsigned findIndex(BNode *, int);
 
-    // Вставляет ключ в узел
-    unsigned nodeInsert(BNode<T> *, T);
+    // Добавляет ключ в узел
+    unsigned nodeInsert(BNode *, int);
 
-    // Удаляет ключ по заданному индексу из узла.
-    T nodeDelete(BNode<T> *, unsigned);
+    // Удаляет ключ по указанному индексу
+    int nodeDelete(BNode *, unsigned);
 
-    // Функция для разделения переполненных узлов.
-    void splitChild(BNode<T> *, int);
+    // Функция для разделения заполненных узлов
+    void splitChild(BNode *, int);
 
-    // Слияние двух дочерних узлов с заданным индексом в одного ребёнка.
-    char mergeChildren(BNode<T> *, unsigned);
+    // Объединяет двух детей из узла по указанному индексу в одного ребёнка
+    char mergeChildren(BNode *, unsigned);
 
-    // Убеждаемся, что ребёнок узла с указанным индексом имеет элементы >= minDegree.
-    char fixChildSize(BNode<T> *, unsigned);
+    // Проверка того, что количество детей узла >= minDegree
+    char fixChildSize(BNode *, unsigned);
 
-    // Рекурсивно выводит поддерево.
-    void printNode(BNode<T> *, unsigned);
+    // Рекурсия, принт поддерева
+    void printNode(BNode *, unsigned);
 
-    // Корневой узел.
-    BNode<T> *root;
+    // Корневой узел
+    BNode *root;
 
-    // Функция сравнения, используемая для управления размещением элементов.
-    bool (*lessThan)(T, T);
+    // Сравнение, позволяющее организовавать расположение элементов
+    bool lessThan(int, int);
 
-    // Функция, используемая для печати элементов в дереве.
-    void (*printKey)(T);
+    // Вывод элементов в дереве
+    void printKey(int);
 
-    // Минимальная степень дерева.
+    // Минимальная степень дерева
     unsigned minDegree;
   };
+
+#include "data_structure.hpp"
 }  // namespace itis
