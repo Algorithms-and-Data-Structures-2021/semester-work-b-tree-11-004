@@ -6,7 +6,7 @@
 #include <functional>
 #include <parser.hpp>
 
-#include "data_structure.cpp"
+#include "BTree.cpp"
 
 using namespace std;
 using namespace itis;

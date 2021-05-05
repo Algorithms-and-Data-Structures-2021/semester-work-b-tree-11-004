@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 # Определите название вашего проекта (должно совпадать с названием репозитория).
 # Примечание: замените символ '-' на '_'.
-project(semester_work_template_b_tree_11_004)
+project(semester_work_b_tree_11_004)
 
 # === Определение стандарта C++ для всего проекта ===
 
@@ -28,14 +28,17 @@ add_library(project_paths INTERFACE)
 
 target_compile_definitions(project_paths INTERFACE
         PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
-        PROJECT_DATASET_DIR="${CMAKE_SOURCE_DIR}/dataset/data")
+        PROJECT_DATASET_DIR="${CMAKE_SOURCE_DIR}/dataset/data"
+        PROJECT_DATASET_DIR_INSERT="${CMAKE_SOURCE_DIR}/dataset/data/insert"
+        PROJECT_DATASET_DIR_REMOVE="${CMAKE_SOURCE_DIR}/dataset/data/remove"
+        PROJECT_DATASET_DIR_FIND="${CMAKE_SOURCE_DIR}/dataset/data/find")
 
 # === Библиотека со структурой данных (target) ===
 # Это самое главное, что вы должны реализовать в рамках семестрового проекта.
 
 add_library(${PROJECT_NAME} STATIC
-        src/data_structure.cpp
-        include/data_structure.hpp)
+        src/BTree.cpp
+        include/BTree.hpp)
 
 # включить предупреждения компилятора для библиотеки (линковка)
 target_link_libraries(${PROJECT_NAME} PRIVATE project_warnings)

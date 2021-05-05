@@ -1,23 +1,27 @@
 #include <iostream>
-#include <parser.hpp>
+#include <BTree.hpp>
 
 using namespace std;
 
 int main() {
+  itis::BTree t(3);
+  t.insert(8);
+  t.insert(9);
+  t.insert(10);
+  t.insert(11);
+  t.insert(15);
+  t.insert(16);
+  t.insert(17);
+  t.insert(18);
+  t.insert(20);
+  t.insert(23);
 
-  string pathToTests;
-  string pathToResult;
-  int iterations = 1;
-
-
-  cout << "Enter path to file with tests:\n";
-  cin >> pathToTests;
-  cout << "Enter path to results file:\n";
-  cin >> pathToResult;
-
-  cout << "Enter iterations:\n";
-  cin >> iterations;
-
-  Parser::process_data(pathToTests, pathToResult, iterations);
-  return 0;
+  cout << "The B-tree is: ";
+  t.traverse();
+  t.remove(20);
+  cout << "\nThe B-tree is: ";
+  t.traverse();
+  cout << "\n";
+  t.~BTree();
+  cout << "всё";
 }
