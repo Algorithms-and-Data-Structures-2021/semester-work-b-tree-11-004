@@ -44,13 +44,13 @@ namespace itis {
       return this;
 
     if (leaf == true)
-      return NULL;
+      return nullptr;
 
     return C[i]->search(k);
   }
 
   void BTree::insert(int k) {
-    if (root == NULL) {
+    if (root == nullptr) {
       root = new TreeNode(t, true);
       root->keys[0] = k;
       root->n = 1;
@@ -74,7 +74,7 @@ namespace itis {
   }
 
   BTree::BTree(int temp) {
-    root = NULL;
+    root = nullptr;
     t = temp;
   }
 
@@ -84,7 +84,7 @@ namespace itis {
   }
 
   void BTree::deleteNode(TreeNode *x) {
-    if (x != NULL) {
+    if (x != nullptr) {
       if (!x->leaf) {
         for (int i = 0; i <= x->n; i++) {
           deleteNode(x->C[i]);
@@ -100,7 +100,7 @@ namespace itis {
   }
 
   void BTree::traverse() {
-    if (root != NULL)
+    if (root != nullptr)
       root->traverse();
   }
 
@@ -339,7 +339,7 @@ namespace itis {
     if (root->n == 0) {
       TreeNode *tmp = root;
       if (root->leaf)
-        root = NULL;
+        root = nullptr;
       else
         root = root->C[0];
 
