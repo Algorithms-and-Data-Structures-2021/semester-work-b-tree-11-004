@@ -2,7 +2,7 @@
 
 [![CMake](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-b-tree-11-004/actions/workflows/cmake.yml/badge.svg)](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template/actions/workflows/cmake.yml)
 
-##Краткое описание семестрового проекта:
+## Краткое описание семестрового проекта:
 
 - **B-дерево** - это особый тип самобалансирующегося дерева поиска, в котором каждый узел может содержать более одного ключа и
   может иметь более двух дочерних элементов.
