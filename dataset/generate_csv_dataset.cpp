@@ -9,49 +9,64 @@
 using namespace std;
 
 // абсолютный путь до набора данных
-static constexpr auto kDatasetPath = string_view{PROJECT_DATASET_DIR};
+static constexpr auto kDatasetPathInsert = string_view{PROJECT_DATASET_DIR_INSERT};
+static constexpr auto kDatasetPathFind = string_view{PROJECT_DATASET_DIR_FIND};
+static constexpr auto kDatasetPathErase = string_view{PROJECT_DATASET_DIR_REMOVE};
 
-int main(int argc, char** argv) {
+int main() {
+  const auto pathToFind = string(kDatasetPathFind);
+  const auto pathToErase = string(kDatasetPathErase);
+  const auto pathToInsert = string(kDatasetPathInsert);
+  cout << "Dataset pathToInsert: " << pathToInsert << endl;
+  cout << "Dataset pathToFind: " << pathToFind << endl;
+  cout << "Dataset pathToErase: " << pathToErase << endl;
 
-  // Tip 1: можете передать путь до входного/выходного файла в качестве аргумента
-  for (int index = 0; index < argc; index++) {
-    cout << "Arg: " << argv[index] << '\n';
-  }
+  vector<string> output_streams;
+  output_streams.emplace_back("/100.csv");
+  output_streams.emplace_back("/500.csv");
+  output_streams.emplace_back("/1000.csv");
+  output_streams.emplace_back("/5000.csv");
+  output_streams.emplace_back("/10000.csv");
+  output_streams.emplace_back("/50000.csv");
+  output_streams.emplace_back("/100000.csv");
+  output_streams.emplace_back("/500000.csv");
+  output_streams.emplace_back("/1000000.csv");
+  output_streams.emplace_back("/5000000.csv");
 
-  const auto path = string(kDatasetPath);  // конвертация string_view в string
-  cout << "Dataset path: " << path << endl;
+  vector<int> integers = {100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000};
 
-  // Пример: чтение набора данных
-  auto input_stream = ifstream(path + "/dataset-example.csv");
+  while (!integers.empty()) {
+    auto outputStreamForFind = ofstream(pathToFind + output_streams.front(), ios::ios_base::trunc);
+    auto outputStreamForErase = ofstream(pathToErase + output_streams.front(), ios::ios_base::trunc);
+    auto outputStreamForInsert = ofstream(pathToInsert + output_streams.front(), ios::ios_base::trunc);
 
-  if (input_stream) {
-    int line_number = 0;
+    const auto seed = chrono::system_clock::now().time_since_epoch().count();
+    auto engine = mt19937(seed);  // без seed`а генератор будет выдавать одни и те же значения
+    auto dist = uniform_int_distribution(0, 10000000);  // равновероятное распределение генерируемых чисел
 
-    // построчное чтение
-    for (string line; getline(input_stream, line); /* ... */) {
-      auto ss = stringstream(line);  // оборачиваем строку в объект "поток"
-
-      for (string token; getline(ss, token, ','); /* ... */) {
-        cout << "Token: [" << token << "] at line " << line_number << '\n';
+    if (outputStreamForFind) {
+      for (int counter = 0; counter < integers.front() - 1; counter++) {
+        outputStreamForFind << dist(engine) << ',';
       }
-
-      cout << line << '\n';
-      line_number++;
+      outputStreamForFind << dist(engine) << '\n';
     }
-  }
 
-  // Пример: генерация набора данных
-  auto output_stream = ofstream(path + "/dataset-generated.csv", ios::ios_base::app);
-
-  const auto seed = chrono::system_clock::now().time_since_epoch().count();
-  auto engine = mt19937(seed);  // без seed`а генератор будет выдавать одни и те же значения
-  auto dist = uniform_int_distribution(0, 10);  // равновероятное распределение генерируемых чисел
-
-  if (output_stream) {
-    for (int counter = 0; counter < 10; counter++) {
-      output_stream << dist(engine) << ',';
+    if (outputStreamForErase) {
+      for (int counter = 0; counter < integers.front() - 1; counter++) {
+        outputStreamForErase << dist(engine) << ',';
+      }
+      outputStreamForErase << dist(engine) << '\n';
     }
-    output_stream << dist(engine) << '\n';
+
+    if (outputStreamForInsert) {
+      for (int counter = 0; counter < integers.front() - 1; counter++) {
+        outputStreamForInsert << dist(engine) << ',';
+      }
+      outputStreamForInsert << dist(engine) << '\n';
+    }
+
+    integers.erase(integers.begin());
+    output_streams.erase(output_streams.begin());
   }
 
   return 0;

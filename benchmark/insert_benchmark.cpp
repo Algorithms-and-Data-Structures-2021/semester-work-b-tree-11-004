@@ -26,7 +26,7 @@ int main() {
   output_file1.close();
   // работа с набором данных
   vector<string> files = {"100", "500", "1000", "5000", "10000", "50000", "100000", "500000", "1000000", "5000000"};
-  BTree bTree(50);
+  BTree bTree(3);
 
   for (const string& file : files) {  // Проходим по всем 10 .csv файлам
     for (int i = 1; i < 11; i++) {    // Запускаем замерку времени 10 раз
@@ -36,7 +36,7 @@ int main() {
 
       input_file = ifstream(path + "/" + file + ".csv");
 
-      //         здесь находится участок кода, время которого необходимо замерить
+      // здесь находится участок кода, время которого необходимо замерить
       if (input_file) {
         int line_number = 0;
         for (string line; getline(input_file, line, ','); /* ... */) {
@@ -50,7 +50,7 @@ int main() {
       }
 
       const auto time_elapsed_ns_insert = chrono::duration_cast<chrono::nanoseconds>(time_diff_insert).count();
-      cout << time_elapsed_ns_insert << endl;
+        cout << time_elapsed_ns_insert << endl;
 
       bTree.deleteNode(bTree.root);
       input_file.close();

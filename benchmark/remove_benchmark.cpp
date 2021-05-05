@@ -27,6 +27,7 @@ int main() {
   // работа с набором данных
   vector<string> files = {"100", "500", "1000", "5000", "10000", "50000", "100000", "500000", "1000000", "5000000"};
   BTree bTree(50);
+
   for (const string& file : files) {  // Проходим по всем 10 .csv файлам
     for (int i = 1; i < 11; i++) {    // Запускаем замерку времени 10 раз
       auto input_file = ifstream(path + "/" + file + ".csv");

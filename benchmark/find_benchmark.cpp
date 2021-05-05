@@ -17,6 +17,7 @@ static constexpr auto kDatasetPath = string_view{PROJECT_DATASET_DIR_FIND};
 static constexpr auto kProjectPath = string_view{PROJECT_SOURCE_DIR};
 
 int main() {
+
   // Tip 1: входные аргументы позволяют более гибко контролировать параметры вашей программы
   const auto path = string(kDatasetPath);
   const auto output_path = string(kProjectPath) + "/benchmark/result/findResults.csv";
@@ -44,7 +45,7 @@ int main() {
 
       input_file = ifstream(path + "/" + file + ".csv");
       auto time_diff_find = chrono::nanoseconds::zero();
-      //         здесь находится участок кода, время которого необходимо замерить
+      // здесь находится участок кода, время которого необходимо замерить
       if (input_file) {
         int line_number = 0;
         for (string line; getline(input_file, line, ','); /* ... */) {
