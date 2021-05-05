@@ -11,10 +11,8 @@ namespace itis {
   TreeNode::TreeNode(int t1, bool leaf1) {
     t = t1;
     leaf = leaf1;
-
     keys = new int[2 * t - 1];
     C = new TreeNode *[2 * t];
-
     n = 0;
   }
 
@@ -86,17 +84,19 @@ namespace itis {
   }
 
   void BTree::deleteNode(TreeNode *x) {
-    if (!x->leaf) {
-      for (int i = 0; i <= x->n; i++) {
-        deleteNode(x->C[i]);
+    if (x != NULL) {
+      if (!x->leaf) {
+        for (int i = 0; i <= x->n; i++) {
+          deleteNode(x->C[i]);
+        }
       }
+      delete (x->C);
+      for (int i = 0; i < x->n; ++i) {
+        remove(x->keys[i]);
+      }
+      delete (x->keys);
+      delete (x);
     }
-    delete (x->C);
-    for (int i = 0; i < x->n; ++i) {
-      remove(x->keys[i]);
-    }
-    delete (x->keys);
-    delete (x);
   }
 
   void BTree::traverse() {

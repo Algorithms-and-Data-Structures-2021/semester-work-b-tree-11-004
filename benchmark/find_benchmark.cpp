@@ -1,6 +1,3 @@
-//
-// Created by Семен Соколов on 25.04.2021.
-//
 #include <fstream>
 #include <iostream>
 #include <string>       // string, string to int
@@ -10,7 +7,7 @@
 #include <sstream>
 
 // подключаем вашу структуру данных
-#include "AVLTree.hpp"
+#include "BTree.hpp"
 
 using namespace std;
 using namespace itis;
@@ -28,7 +25,7 @@ int main() {
   output_file1.close();
   // работа с набором данных
   vector<string> files = {"100", "500", "1000", "5000", "10000", "50000", "100000", "500000", "1000000", "5000000"};
-  AVLTree<int> avlTree;
+  BTree bTree(50);
 
   for (const string& file : files) {  // Проходим по всем 10 .csv файлам
     for (int i = 1; i < 11; i++) {    // Запускаем замерку времени 10 раз
@@ -39,7 +36,7 @@ int main() {
         int line_number = 0;
         for (string line; getline(input_file, line, ','); /* ... */) {
           auto ss = stringstream(line);  // оборачиваем строку в объект "поток"
-          avlTree.insert(stoi(line));
+          bTree.insert(stoi(line));
           line_number++;
         }
       }
@@ -53,7 +50,7 @@ int main() {
         for (string line; getline(input_file, line, ','); /* ... */) {
           auto ss = stringstream(line);
           const auto time_point_before_find = chrono::high_resolution_clock::now();
-          avlTree.find(stoi(line));
+          bTree.search(stoi(line));
           const auto time_point_after_find = chrono::high_resolution_clock::now();
           line_number++;
           time_diff_find += time_point_after_find - time_point_before_find;
@@ -63,7 +60,7 @@ int main() {
       const auto time_elapsed_ns_find = chrono::duration_cast<chrono::nanoseconds>(time_diff_find).count();
       cout << time_elapsed_ns_find << endl;
 
-      avlTree.clear();
+      bTree.deleteNode(bTree.root);
       input_file.close();
 
       //Открываем файл для записи и вносим полученые данные

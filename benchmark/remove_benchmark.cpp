@@ -1,6 +1,3 @@
-//
-// Created by Семен Соколов on 25.04.2021.
-//
 #include <fstream>
 #include <iostream>
 #include <string>       // string, string to int
